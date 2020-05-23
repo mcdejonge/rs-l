@@ -1,0 +1,12 @@
+.DS_Store
+compiled
+doc/
+scribblings/manual-fonts.css
+scribblings/manual-racket.css
+scribblings/manual-racket.js
+scribblings/manual-style.css
+scribblings/racket.css
+scribblings/rs-l.html
+scribblings/scribble-common.js
+scribblings/scribble.css
+scratch.rkt
