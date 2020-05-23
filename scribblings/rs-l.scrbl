@@ -75,7 +75,7 @@ Example:
 
 This rotates seq two steps to the left at the start of every iteration of the loop of the track it is assigned to.
 
-The reason this works is that in rs sequences can have an arbitrary number of steps AND sequences can be nested. What happens is every iteration of the track loop the sequence "seq-rotating" is started, which has only one event, namely the event created by rs-l-rotate-left. This event returns another sequence, namely the list (note1 note2 note3 note4), which is rotated every time the event created by rs-l-rotate-left is called.
+The reason this works is that in rs sequences can have an arbitrary number of steps AND sequences can be nested. What happens is every iteration of the track loop the sequence "seq-rotating" is started, which has only one event, namely the event created by rs-l-rotate-left. This event returns another sequence, namely the list (note1 note2 note3), which is rotated every time the event created by rs-l-rotate-left is called.
 
 The result loooks like this:
 
