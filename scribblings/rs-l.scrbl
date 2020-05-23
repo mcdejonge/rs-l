@@ -13,7 +13,7 @@
 
 @section{Overview}
 
-This package collects useful tools for creating loops and events for @hyperlink["https://pkgs.racket-lang.org/package/rs"]{rs - the Racket Sequencers}.
+This package collects useful tools for creating loops and events for @hyperlink["https://pkgs.racket-lang.org/package/rs"]{rs - the Racket Sequencer}.
 
 @section[#:tag "functions"]{Functions}
 
