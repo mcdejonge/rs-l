@@ -87,8 +87,18 @@ The result loooks like this:
 ;; ... etc
 
 }|
+
+@defproc[(rs-l-stack [events list?]
+                     [#:get-step-function procedure? "Function that gets the next event from the stack"]
+                     [#:offset valid-offset? 0]) rs-e?]
+
+Creates a "stack event". Every time the stack event is triggered, one of the events from the list of events (the "stack") is triggered. Which event is triggered is determined by @racket[#:get-step-function]. This is a function that hets the events and the current position (a 0 based index) as arguments. If it is not supplied, it defaults to a function that retrieves the element at the current position, so given a sequence @racket[(list '() note1 (note2 note3))] it will first do nothing, the next time play note1 and the third time it will play a sequence consisting of note2 and note3 (the fourth time it will go back to the first event in the list).
+
+Stack events are powerful tools to create alternation in your sequences.
+
 @section{Changelog}
 
 @itemlist[
+    @item{@bold{2020-06-06} Created rs-l-stack}
     @item{@bold{2020-05-23} Initial release.}
 ]

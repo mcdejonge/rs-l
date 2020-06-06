@@ -10,7 +10,11 @@
          rs-l-process-seq
          rs-l-repeats
          rs-l-rotate-left
-         rs-l-rotate-right)
+         rs-l-rotate-right
+         rs-l-stack
+         ;;rs-l-stack-cond
+         ;;rs-l-stack-random
+         )
 
 (define (valid-offset? offset)
   (and (number? offset)
@@ -76,3 +80,34 @@
                       (append (take-right seq-in-lambda num-steps) (drop-right seq-in-lambda num-steps)))
                     #:offset offset))
 
+
+(define/contract (rs-l-stack events
+                             #:get-step-function
+                             [get-step-function
+                              (lambda (events-in-lambda pos-in-lambda)
+                                (list-ref events-in-lambda pos-in-lambda ))]
+                             #:offset [offset 0])
+  (->* (list?)
+       (#:get-step-function procedure? #:offset valid-offset?) rs-e?)
+  ;; Creates a stack event. Every time the event is called, an event
+  ;; is pulled from the supplied list of events (the stack) using
+  ;; get-step-function. get-step-function is a procedure that receives
+  ;; the events and the current position (0-based index) as
+  ;; arguments. If no get-step-function is supplied, it defaults to a
+  ;; function that retrieves the element at the current position.
+  (define pos 0)
+  (rs-e-create #:fn
+               (lambda (step-time)
+                 (printf "Pos is ~s and length is ~s\n" pos (length events))
+                 (cond [(< pos (length events))
+                        (set! pos (+ pos 1))]
+                       [else (set! pos 1)])
+                 (define step (get-step-function events (- pos 1)))
+                 (cond [(and (list? step)
+                              (not (null? step)))
+                        (rs-t-play-seq! step step-time)]
+                       [(null? step)
+                        (rs-t-play-seq! (list step) step-time)]
+                       [else
+                        (rs-t-play-seq! (list step) step-time)]))
+               #:offset offset))
