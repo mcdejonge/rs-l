@@ -12,8 +12,7 @@
          rs-l-rotate-left
          rs-l-rotate-right
          rs-l-stack
-         ;;rs-l-stack-cond
-         ;;rs-l-stack-random
+         rs-l-stack-random
          )
 
 (define (valid-offset? offset)
@@ -111,3 +110,14 @@
                        [else
                         (rs-t-play-seq! (list step) step-time)]))
                #:offset offset))
+
+(define/contract (rs-l-stack-random events #:offset [offset 0])
+  (->* (list?)
+       (#:offset valid-offset?) rs-e?)
+  ;; Creates a stack event where every time the event is called an
+  ;; event is randomly selected from the stack.
+  (rs-l-stack events
+              #:offset offset
+              #:get-step-function
+              (lambda (events-in-lambda pos-in-lambda)
+                (list-ref events-in-lambda (random (length events-in-lambda))))))

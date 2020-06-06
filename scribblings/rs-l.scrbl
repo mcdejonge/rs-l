@@ -94,7 +94,12 @@ The result loooks like this:
 
 Creates a "stack event". Every time the stack event is triggered, one of the events from the list of events (the "stack") is triggered. Which event is triggered is determined by @racket[#:get-step-function]. This is a function that hets the events and the current position (a 0 based index) as arguments. If it is not supplied, it defaults to a function that retrieves the element at the current position, so given a sequence @racket[(list '() note1 (note2 note3))] it will first do nothing, the next time play note1 and the third time it will play a sequence consisting of note2 and note3 (the fourth time it will go back to the first event in the list).
 
-Stack events are powerful tools to create alternation in your sequences.
+Stack events are a powerful tool to help you create alternating sequences.
+
+@defproc[(rs-l-stack-random [events list?]
+                            [#:offset valid-offset? 0]) rs-e?]
+
+Creates a "stack event" where events are selected randomly from the stack. So, for example, if you supply it a stack consisting of @racket[(list note1 note2 '())] every time it is triggered it will either play note1, note2 or nothing.
 
 @section{Changelog}
 
